@@ -37,10 +37,10 @@ def contactus(request):
             subject = form.cleaned_data['title']
             from_email = form.cleaned_data['email']
             message = form.cleaned_data['text']
-            # try:
-            #     send_mail(subject, message, from_email, ['admin@example.com'])
-            # except BadHeaderError:
-            #     return HttpResponse('Invalid header found.')
+            try:
+                send_mail(subject, message, from_email, ['ostaduj@fastmail.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
             return render(request, 'home/success.html')
     return render(request, "home/contactus.html", {'form': form,
                                                    'p': True})
