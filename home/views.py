@@ -34,13 +34,13 @@ def contactus(request):
     else:
         form = ContactForm(request.POST)
         if form.is_valid():
-            subject = form.cleaned_data['subject']
-            from_email = form.cleaned_data['from_email']
-            message = form.cleaned_data['message']
-            try:
-                send_mail(subject, message, from_email, ['admin@example.com'])
-            except BadHeaderError:
-                return HttpResponse('Invalid header found.')
-            return redirect('success')
+            subject = form.cleaned_data['title']
+            from_email = form.cleaned_data['email']
+            message = form.cleaned_data['text']
+            # try:
+            #     send_mail(subject, message, from_email, ['admin@example.com'])
+            # except BadHeaderError:
+            #     return HttpResponse('Invalid header found.')
+            return render(request, 'home/success.html')
     return render(request, "home/contactus.html", {'form': form,
-                                              'p': True})
+                                                   'p': True})
