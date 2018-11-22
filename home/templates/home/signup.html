@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-
+    {% extends "home/base.html" %}
+    {% block content %}
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">Create an account</button>
+    </form>
+    {% endblock %}
 </body>
 </html>
