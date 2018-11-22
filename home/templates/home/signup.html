@@ -1,38 +1,15 @@
-{% extends "home/base.html" %}
-
-{% block content %}
-    <form id="" method="post" novalidate>
-        {% csrf_token %}
-        <div class="group">
-            <label for="id_email" class="label">Email</label>
-            <input id="id_email" name="email" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,15}$"
-                   class="input" value="" title="Please enter a valid email address." autofocus required>
-            <label id="email-err" for="id_email" class="label-err"></label>
-            <label id="email-ok" for="id_email" class="label-ok"></label>
-        </div>
-        <div class="group">
-            <label for="id_first_name" class="label">First Name</label>
-            <input id="id_first_name" name="firstName" type="text" class="input" value="" required
-                   pattern="[A-z0-9À-ž]+"
-                   title="First name doesn't follow the pattern. Only latin letters are allowed.">
-        </div>
-        <div class="group">
-            <label for="id_last_name" class="label">Last Name</label>
-            <input id="id_last_name" name="lastName" type="text" class="input" value="" required pattern="[A-z0-9À-ž]+"
-                   title="Last name doesn't follow the pattern. Only latin letters are allowed.">
-        </div>
-        <div class="group" style="margin-bottom: 0px;">
-            <label for="id_password1" class="label" id="passwordLabel">Password</label>
-            <input id="id_password1" name="password" type="password" class="input" data-type="password" required
-                   minlength="6">
-        </div>
-        <div class="group">
-            <label for="id_password2" class="label">Repeat Password</label>
-            <input id="id_password2" name="password-confirm" type="password" class="input" data-type="password"
-                   required minlength="6">
-        </div>
-        <div class="group">
-            <input id="id_submit" type="submit" class="button" value="Sign Up">
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% extends "home/base.html" %}
+    {% block content %}
+    <form method="post" novalidate>
+      {% csrf_token %}
+    {{ form.as_p }}
+      <button type="submit" id="id_submit">Create an account</button>
     </form>
 {% endblock %}
