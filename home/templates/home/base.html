@@ -8,8 +8,12 @@
 <nav id="id_navbar">
     <a href="/" id="id_navbar_home">main</a>
     <a href="/signup" id="id_navbar_signup"> sign up</a>
-    <a href="/login" id="id_navbar_login"> login</a>
     <a href="/contactus" id="id_navbar_contact_us">contact us</a>
+    {% if user.is_authenticated == True %}
+        <a href="/logout" id="id_navbar_logout">logout</a>
+    {% else %}
+        <a href="/login" id="id_navbar_enter">login</a>
+    {% endif %}
 </nav>
 {% block content %}{% endblock content %}
 </body>

@@ -42,4 +42,5 @@ def contactus(request):
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return redirect('success')
-    return render(request, "home/contactus", {'form': form})
+    return render(request, "home/contactus", {'form': form,
+                                              'p': True})
