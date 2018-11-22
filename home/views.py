@@ -1,7 +1,11 @@
 from django.contrib.auth import login as auth_login
 from django.shortcuts import render, redirect
-
-from .models import SignUpForm  # Create your views here.
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
+from .forms import ContactForm
+from home.forms import ContactForm
+from .models import *
 
 
 def home(request):
@@ -22,3 +26,20 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'home/signup.html', {'form': form})
+
+
+def contactus(request):
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ['admin@example.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('success')
+    return render(request, "home/contactus", {'form': form})
