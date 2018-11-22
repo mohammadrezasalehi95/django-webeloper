@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav id="id_navbar">
+<a href="{% url 'home:main' %}" id="id_navbar_home">main</a>
+<a href="/signup" id="id_navbar_signup"> sign up</a>
+<a href="/login" id="id_navbar_login"> login</a>
+</nav>
+{% block content %}{% endblock content %}
+</body>
+</html>
