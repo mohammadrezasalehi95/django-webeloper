@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% extends "home/base.html" %}
+    {% block content %}
+        <p id="id_first_name">{{ firstname }}</p>
+        <p id="id_last_name">{{ lastname }}</p>
+        <p id="id_username"> {{ username }}</p>
+
+        <a href="/profile/editprofile" id="id_edit_profile"> edit your profile</a>
+
+    {% endblock content %}
+
+</body>
+</html>

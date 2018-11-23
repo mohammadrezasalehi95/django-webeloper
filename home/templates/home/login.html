@@ -1,42 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
- {%extends "home/base.html" %}
+{% extends "home/base.html" %}
 
 {% block content %}
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
+    {% if form.errors %}
+        <p>نام کاربری یا گذرواژه غلط است</p>
     {% endif %}
-{% endif %}
 
-<form method="post" action="/">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
+    {% if next %}
+        {% if request.user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+        {% else %}
+            <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
 
-<input type="submit" id="id_submit" value="login">
-</form>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <input type="submit" value="login" id="id_submit">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
 {% endblock %}
-
-</body>
-</html>
