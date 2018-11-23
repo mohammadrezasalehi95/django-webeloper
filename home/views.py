@@ -48,7 +48,7 @@ def contactus(request):
             from_email = form.cleaned_data['email']
             message = form.cleaned_data['text']
             try:
-                send_mail(subject, message, from_email, ['ostaduj@fastmail.com'])
+                send_mail(subject, from_email + "   "+message, recipient_list=['ostaduj@fastmail.com'])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return render(request, 'home/success.html')
