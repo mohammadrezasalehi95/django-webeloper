@@ -20,9 +20,13 @@ def main(request):
 def profile(request):
     user = request.user
     if user.is_authenticated:
-        return render(request, 'home/profile.html',
-                      {'firstname': user.first_name, 'lastname': user.last_name, 'username': user.username,
-                       'bio': user.profile.bio, 'gender': user.profile.gender})
+        if not Profile.objects.all().filter(user=user).exists():
+            return render(request, 'home/profile.html',
+                          {'firstname': user.first_name, 'lastname': user.last_name, 'username': user.username})
+        else:
+            return render(request, 'home/profile.html',
+                          {'firstname': user.first_name, 'lastname': user.last_name, 'username': user.username,
+                           'bio': user.profile.bio, 'gender': user.profile.gender, 'image': user.profile.image.url})
     else:
         return HttpResponse("login first", status=401)
 
@@ -48,7 +52,7 @@ def contactus(request):
             from_email = form.cleaned_data['email']
             message = form.cleaned_data['text']
             try:
-                send_mail(subject, from_email + "   "+message, recipient_list=['ostaduj@fastmail.com'])
+                send_mail(subject, from_email + "   " + message, recipient_list=['ostaduj@fastmail.com'])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return render(request, 'home/success.html')
@@ -66,6 +70,13 @@ def editprofile(request):
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
             user.save()
-            user_profile = Profile(user=user, bio=form.cleaned_data['bio'], gender=form.cleaned_data['gender'])
+            if not Profile.objects.all().filter(user=user).exists():
+                user_profile = Profile(user=user, bio=form.cleaned_data['bio'], gender=form.cleaned_data['gender'])
+            else:
+                user_profile = user.profile
+                user_profile.bio = form.cleaned_data['bio']
+                user_profile.gender = form.cleaned_data['gender']
+                user_profile.image = form.cleaned_data.get('image')
+            user_profile.save()
             return HttpResponseRedirect("/profile")
     return render(request, "home/editprofile.html", {'form': form})

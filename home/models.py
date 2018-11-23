@@ -38,3 +38,5 @@ class Profile(models.Model):
     gender = models.CharField(
         max_length=1, choices=(('M', 'Male'), ('F', 'Female')),
         blank=True, null=True)
+
+    image = models.ImageField(upload_to='profiles')
