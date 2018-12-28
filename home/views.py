@@ -7,6 +7,7 @@ from .forms import ContactForm
 from home.forms import ContactForm
 from .forms import EditProfileForm
 from .models import *
+from django.conf import settings
 
 
 def home(request):
@@ -26,7 +27,8 @@ def profile(request):
         else:
             return render(request, 'home/profile.html',
                           {'firstname': user.first_name, 'lastname': user.last_name, 'username': user.username,
-                           'bio': user.profile.bio, 'gender': user.profile.gender, 'image': user.profile.image.url})
+                           'bio': user.profile.bio, 'gender': user.profile.gender,
+                           'image': user.profile.get_image().url})
     else:
         return HttpResponse("login first", status=401)
 
@@ -52,7 +54,8 @@ def contactus(request):
             from_email = form.cleaned_data['email']
             message = form.cleaned_data['text']
             try:
-                send_mail(subject, from_email + "   " + message, recipient_list=['ostaduj@fastmail.com'])
+                send_mail(subject, message + " " + from_email, settings.EMAIL_HOST_USER,
+                          recipient_list=['ostadju@fastmail.com', 'aligholamzadeh42@gmail.com'])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return render(request, 'home/success.html')
